@@ -7,10 +7,14 @@ int right = 5;
 int bottom = 6;
 int left = 7;
 
+int freq;
+long start, end;
+
 String command;       // String input from command prompt
 String temp1, temp2;  // temporary strings
 char inByte;          // Byte input from command prompt
 char carray[6];
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -35,8 +39,17 @@ void loop() {
   Serial.println("Start");
   Serial.println(analogRead(left));
   analogWrite(led, 255);
+  
 
-  tone(buzzer, 400);
+  freq = 400;
+
+  for (int i=0; i < 20; i++) {
+    tone(buzzer, freq);
+    freq *= 1.05946;
+    Serial.println(freq);
+    delay(10);
+  }
+
 
   delay(500);
 
@@ -46,6 +59,8 @@ void loop() {
   //neopixelWrite(neopixel, 24, 8, 16);
   delay(500);
 }
+
+// An octave is a ratio of 2:1, so from 100 Hz to 200 Hz, and from 200 Hz to 400 Hz, are both octaves. A semitone is a ratio of the 12th root of 2 to 1, which is equal to 1.05946:1, so 1000 Hz and 1059.46 Hz are a semitone apart.
 
 // String takeInput() {
 //   // Input serial information:
