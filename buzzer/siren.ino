@@ -27,7 +27,7 @@ void setup() {
   pinMode(right, INPUT);
 
   Serial.begin(115200);
-  delay(500);
+  delay(100);
   Serial.println("Hello, stranger!");
 
   Serial.flush();
@@ -37,26 +37,32 @@ void loop() {
   // put your main code here, to run repeatedly:
   
   Serial.println("Start");
-  Serial.println(analogRead(left));
+  // Serial.println(analogRead(left));
+  neopixelWrite(neopixel, 0, 0, 0);
   analogWrite(led, 255);
   
 
   freq = 400;
 
-  for (int i=0; i < 20; i++) {
-    tone(buzzer, freq);
-    freq *= 1.05946;
-    Serial.println(freq);
-    delay(10);
-  }
+  start = millis();
+  
+  // for (int i=0; i < 20; i++) {
+  //   tone(buzzer, freq);
+  //   freq *= 1.05946;
+  //   delay(10);
+  // }
 
+  end = millis();
+  Serial.print("Time elapsed for buzzer: ");
+  Serial.println(end - start);
+  
 
   delay(500);
 
 
   analogWrite(led, 0);
-  noTone(buzzer);
-  //neopixelWrite(neopixel, 24, 8, 16);
+  // noTone(buzzer);
+  neopixelWrite(neopixel, 24, 8, 16);
   delay(500);
 }
 
