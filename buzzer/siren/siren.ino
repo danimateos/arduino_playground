@@ -30,14 +30,11 @@ void setup() {
   delay(100);
   Serial.println("Hello, stranger!");
 
-  Serial.flush();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   
-  Serial.println("Start");
-  // Serial.println(analogRead(left));
   neopixelWrite(neopixel, 0, 0, 0);
   analogWrite(led, 255);
   
