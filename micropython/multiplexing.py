@@ -72,9 +72,5 @@ primes = [[True, True, True, False],
           [True, False, False, False]]
 
 
-def show_primes(refresh_rate):
-    
-    
-    pattern(primes, 1 / refresh_rate)
     
     
