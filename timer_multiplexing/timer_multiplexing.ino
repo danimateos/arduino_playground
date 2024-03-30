@@ -1,23 +1,22 @@
-const int r1 = 0;
-const int r2 = 1;
-const int r3 = 2;
-const int r4 = 3;
+const int r0 = 0;
+const int r1 = 1;
+const int r2 = 2;
+const int r3 = 3;
 
-const int c1 = 4;
-const int c2 = 5;
-const int c3 = 6;
-const int c4 = 7;
+const int c0 = 4;
+const int c1 = 5;
+const int c2 = 6;
+const int c3 = 7;
 
 const int nRows = 4;
 const int nCols = 4;
 
-int rows[nRows] = { r1, r2, r3, r4 };
-int cols[nCols] = { c1, c2, c3, c4 };
-int all_pins[nRows + nCols] = { r1, r2, r3, r4, c1, c2, c3, c4 };
+int rows[nRows] = { r0, r1, r2, r3 };
+int cols[nCols] = { c0, c1, c2, c3 };
+int all_pins[nRows + nCols] = { r0, r1, r2, r3, c0, c1, c2, c3 };
 bool pattern[nRows * nCols];
 
-bool primes[nRows * nCols] = { true, true, true, false, true, false, true, false, false, false, true, false, true, false, false, false };
-bool testPattern[nCols] = {true, false, true, true};
+bool primes[nRows * nCols] = { false, true, true, false, true, false, true, false, false, false, true, false, true, false, false, false };
 
 long iteration = 0;
 long start, end;
@@ -38,11 +37,7 @@ void setup() {
 
 void loop() {
 
-  
-  rowShow(r3, testPattern);
-
-
-  iteration += 1;
+  rowShow(0, primes);
 
   if (iteration % nCycles == 0) {
     end = micros();
@@ -51,17 +46,20 @@ void loop() {
     Serial.println(averageTime);
     start = micros();
   }
+  iteration += 1;
 }
 
-void rowShow(int row, bool pattern[]) {
+void rowShow(int rowNumber, bool pattern[]) {
   allOff();
-  digitalWrite(row, HIGH);
+  digitalWrite(rows[rowNumber], HIGH);
 
   for (int i = 0; i < nCols; i++) {
-    if (pattern[i]) {
+    int position =  rowNumber * nRows + i;
+    if (pattern[position]) {
       digitalWrite(cols[i], HIGH);
     }
   }
+
 }
 
 
