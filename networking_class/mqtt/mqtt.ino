@@ -5,19 +5,24 @@ const char* ssid = "Iaac-Wifi";
 const char* password = "";
 WiFiClient wifiClient;
 
-const char* mqttBroker = "mqtt-staging.smartcitizen.me";
+const char* mqttBroker = "test.mosquitto.org";
+const int mqttPort = 1883;
 const char* mqttClientName = "danimateos";
 const char* mqttUser = "";  // MQTT User Authentification
-const char* mqttPass = "";              // MQTT Password Authentification
-const char* my_topic = "lab/fabacademy/danimateos";
-const char* class_topic = "lab/fabacademy/emily"; // partner's topic
-const char* all_topics_inside_fab_1level = "lab/fabacademy/+"; 
-const char* all_topics_recursive = "lab/fabacademy/#"; 
+const char* mqttPass = "";  // MQTT Password Authentification
+const char* my_topic = "fablabbcn/mdef/danimateos";
+const char* partner_topic = "fablabbcn/mdef/leela";  // partner's topic
+const char* all_topics_inside_mdef_1level = "fablabbcn/mdef/+";
+const char* all_topics_recursive = "fablabbcn/mdef/#";
 PubSubClient mqttClient(wifiClient);
 
-int but = 0;
-int led = 48;
+int but = 0;   // Barduino
+int led = 48;  // Barduino
 bool pressed = false;
+
+unsigned long lastMsg = 0;
+char msg[50];
+
 
 void mqttConnect() {
 
@@ -25,14 +30,14 @@ void mqttConnect() {
 
     Serial.print("Attempting MQTT connection...");
 
-    if (mqttClient.connect(mqttClientName, mqttUser, mqttPass)) {
+    if (mqttClient.connect(mqttClientName)) { // Alt: mqttClient.connect(mqttClientName, mqttUser, mqttPass);
 
       Serial.println("connected");
-      mqttClient.publish("hi to all goats! I'm a converted turkey", mqttClientName);
+      mqttClient.publish(my_topic, "Good news everyone! I'm here");
 
       // Topic(s) subscription
-      mqttClient.subscribe(class_topic);
-      //mqttClient.subscribe(name_topic);
+      mqttClient.subscribe(partner_topic);
+      //mqttClient.subscribe(my_topic);
 
     } else {
 
@@ -45,12 +50,12 @@ void mqttConnect() {
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  String incommingMessage = "";
+  String incomingMessage = "";
   for (int i = 0; i < length; i++) {
-    incommingMessage += (char)payload[i];
+    incomingMessage += (char)payload[i];
   }
-  Serial.println("Message arrived[" + String(topic) + "]" + incommingMessage);
-  if (incommingMessage == "on") {
+  Serial.println("Message arrived[" + String(topic) + "]: " + incomingMessage);
+  if (incomingMessage == "on") {
     digitalWrite(led, HIGH);
   } else {
     digitalWrite(led, LOW);
@@ -79,12 +84,11 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   // MQTT setup
-  mqttClient.setServer(mqttBroker, 1883);
+  mqttClient.setServer(mqttBroker, mqttPort);
   mqttClient.setCallback(callback);
 }
 
-unsigned long lastMsg = 0;
-char msg[50];
+
 
 void loop() {
   // Check if we are still connected to the MQTT broker
@@ -108,25 +112,4 @@ void loop() {
     mqttClient.publish(my_topic, "off");
     pressed = false;
   }
-
-  // unsigned long max = 0;
-  // int max_i;
-  // for (int i=0; i<4; i++){
-  //   values[i] = touchRead(i+4);
-  //   //Serial.print(values[i]);
-  //   //Serial.print(",");
-  //   if (values[i] > max){
-  //     max = values[i];
-  //     max_i = i;
-  //   }
-  // }
-  // //Serial.println("");
-  // if (max > threshold && dir != direction[max_i]){
-  //   dir = direction[max_i];
-  //   Serial.println(dir);
-  //   mqttClient.publish(draw_topic, dir.c_str());
-  // }
-  // else if (max <= threshold){
-  //   dir="";
-  // }
 }
