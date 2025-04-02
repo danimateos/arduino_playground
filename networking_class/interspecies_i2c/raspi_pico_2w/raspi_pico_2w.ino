@@ -5,7 +5,7 @@ String content = "";
 void setup() {
   Serial.begin(115200);
 
-  Wire.begin();  // master
+  Wire.begin();  // No address, so master. I2C default pins are GPIO 4 (SDA) and GPIO 5 (SCL). 
 }
 
 void loop() {
