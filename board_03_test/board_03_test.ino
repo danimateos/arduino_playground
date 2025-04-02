@@ -41,18 +41,18 @@ void loop() {
 
   Serial.println(analogRead(HALL));
 
-  digitalWrite(LED_R, HIGH);
-  digitalWrite(LED_B, LOW);
-  Serial.println("R");
-  delay(100);
-
-  digitalWrite(LED_G, HIGH);
   digitalWrite(LED_R, LOW);
-  Serial.println("G");
-  delay(100);
-
   digitalWrite(LED_B, HIGH);
+  Serial.println("R");
+  delay(200);
+
   digitalWrite(LED_G, LOW);
+  digitalWrite(LED_R, HIGH);
+  Serial.println("G");
+  delay(700);
+
+  digitalWrite(LED_B, LOW);
+  digitalWrite(LED_G, HIGH);
   Serial.println("B");
-  delay(100);
+  delay(700);
 }

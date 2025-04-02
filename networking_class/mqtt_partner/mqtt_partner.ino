@@ -7,11 +7,11 @@ WiFiClient wifiClient;
 
 const char* mqttBroker = "test.mosquitto.org";
 const int mqttPort = 1883;
-const char* mqttClientName = "danimateos";  // CHOOSE ONE THAT IS FAIRLY UNIQUE
+const char* mqttClientName = "leela";
 const char* mqttUser = "";  // MQTT User Authentification
 const char* mqttPass = "";  // MQTT Password Authentification
-const char* my_topic = "fablabbcn/mdef/danimateos";  // CHOOSE ONE
-const char* partner_topic = "fablabbcn/mdef/whatUpMDEF";  // GET FROM YOUR PARTNER
+const char* my_topic = "fablabbcn/mdef/leela";
+const char* partner_topic = "fablabbcn/mdef/danimateos";  // partner's topic
 const char* all_topics_inside_mdef_1level = "fablabbcn/mdef/+";
 const char* all_topics_recursive = "fablabbcn/mdef/#";
 PubSubClient mqttClient(wifiClient);
@@ -37,7 +37,7 @@ void mqttConnect() {
 
       // Topic(s) subscription
       mqttClient.subscribe(partner_topic);
-      // mqttClient.subscribe(all_topics_inside_mdef_1level);
+      //mqttClient.subscribe(all_topics_inside_mdef_1level);
 
     } else {
 
@@ -54,6 +54,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   for (int i = 0; i < length; i++) {
     incomingMessage += (char)payload[i];
   }
+
   Serial.println("Message arrived[" + String(topic) + "]: " + incomingMessage);
   if (incomingMessage == "on") {
     digitalWrite(led, HIGH);
