@@ -22,17 +22,12 @@ Communicate using morse code using the Barduino.
 
 dot dot dash... Use your resources to encode a message, and try to decode the rest of messages!
 
-Here is my solution, using the LED and the buzzer. Try to do it yourself first, and check this one if you don't manage. 😉
-
-
 Day 5
 -----
 
 Play a Christmas carol (or a song you like) using the Barduino.
 
 Time to make some music! Use the buzzer (or any other thing!) to make some music, the idea is to play a Christmas carol. As we come from many different places, try to play one from your hometown, to have a nice collection of tunes 🥳
-
-Here is my version of A Betlem m'en vull anar
 
 
 
