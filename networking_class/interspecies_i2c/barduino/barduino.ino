@@ -1,5 +1,7 @@
 #include <Wire.h>
 
+String content = "Duuuuuuude";
+
 void setup() {
   Serial.begin(115200);
 
@@ -14,7 +16,5 @@ void loop() {
 
 void respond() {
   Serial.println("So happy! I received a request!");
-  Wire.write('y');
-  Wire.write('a');
-  Wire.write('y');
+  Wire.write(content, 8);
 }

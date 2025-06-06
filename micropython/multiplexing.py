@@ -6,9 +6,10 @@ micropython.alloc_emergency_exception_buf(100)
 
 
 ## Barduino
-r1 = Pin(12, Pin.OUT)
-r2 = Pin(13, Pin.OUT)
-r3 = Pin(11, Pin.OUT)  # Barduino 14 is connected to the buzzer
+# Barduino pin 14 is connected to the buzzer
+r1 = Pin(11, Pin.OUT)
+r2 = Pin(12, Pin.OUT)
+r3 = Pin(13, Pin.OUT)  
 r4 = Pin(15, Pin.OUT)
 
 c1 = Pin(16, Pin.OUT)

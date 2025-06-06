@@ -30,7 +30,7 @@ void setup() {
 //  pinMode(led, OUTPUT);
 
   ledcAttachPin(led, 1); // assign led pins to channel 1
-  ledcSetup(1, 12000, 8);
+   ledcSetup(1, 12000, 8);
 
   Serial.begin(115200);
   Serial.println("We're on!");

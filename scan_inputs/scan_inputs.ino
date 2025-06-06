@@ -51,7 +51,7 @@ void loop() {
 void show() {
 
 
-  char buffer[50];
+  char buffer[150];
   for (int i = first; i <= last; i++) {
     sprintf(buffer, " Reading_%02d:%d", i, analogRead(i));
     Serial.print(buffer);

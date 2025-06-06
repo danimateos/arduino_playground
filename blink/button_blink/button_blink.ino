@@ -8,9 +8,12 @@ int button;
 // int BUTTON = 0;
 
 // Seeed XIAO RP2040. Button pressed is 1
-int LED = 26; 
-int BUTTON = 27;
+// int LED = 26; 
+// int BUTTON = 27;
 
+// board_02
+int LED = 0; // Also 21
+int BUTTON = 1;
 
 void setup() {
   Serial.begin(115200);
@@ -30,7 +33,7 @@ void loop() {
   Serial.println(button);
 
   // Blink if pressed, non blocking
-  if (millis() - start >= 50 && button) {
+  if (millis() - start >= 300) {  //  && button
     state = !state;
     digitalWrite(LED, state);
     start = millis();

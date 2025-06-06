@@ -1,30 +1,34 @@
 int buttonState;
 
+int LED = D0;
+int BUTTON = D1;
+float changeFactor = 1.2;
+
 void setup() {
-  pinMode(D0, OUTPUT);
-  pinMode(D1, INPUT);
+  pinMode(LED, OUTPUT);
+  pinMode(BUTTON, INPUT);
   Serial.begin(115200);
 }
 
 void loop() {
 
-  int duration = 300;
-  int buttonState = digitalRead(D1);
+  int duration = 250;
+  int buttonState = digitalRead(BUTTON);
 
   while (duration > 10 && duration < 1000) {
 
-    digitalWriteFast(D0, HIGH);
+    digitalWriteFast(LED, HIGH);
     delay(duration);
 
-    digitalWriteFast(D0, LOW);
+    digitalWriteFast(LED, LOW);
     delay(duration);
 
-    int buttonState = digitalRead(D1);
+    int buttonState = digitalRead(BUTTON);
 
     if (buttonState) {
-      duration /= 1.1;
+      duration /= changeFactor;
     } else {
-      duration *= 1.1;
+      duration *= changeFactor;
     }
 
     Serial.print(buttonState);
