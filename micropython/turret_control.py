@@ -25,11 +25,32 @@ def main():
 #         print(f"T {top.read()} R {right.read()} B {bottom.read()} L {left.read()}")
 
         turn_speed = calculate_turn(left, right)
-        pitch = calculate_pitch(top, bottom)
+        turn(turn_speed, left_pin, right_pin)
         
-        print(f"turn_speed {turn_speed*100} pitch {pitch}")
+        angle = calculate_pitch(top, bottom)
+        pitch(angle, servo)
         
+        
+        
+        print(f"turn_speed {turn_speed*100} pitch {angle}")
+        
+       
+def turn(turn_speed, left, right):
+    
+    if turn_speed < -0.2:
+        right.off()
+        left.on()
+    elif turn_speed > 0.2:
+        left.off()
+        right.on()
+    else:
+        left.off()
+        right.off()
+         
+    
 
+def pitch(angle, servo):
+    servo.move(angle)
 
 
 def calculate_turn(left_pad, right_pad):
