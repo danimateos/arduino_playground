@@ -1,9 +1,13 @@
 from machine import Pin, PWM, TouchPad
 import time
+import math
 
 
 CALIBRATION_VALUE = 300000
-
+MAX_ANGULAR_SERVO_SPEED = .5  # degrees/ms
+current_angle = 0
+prev_angle = 0
+angle_update_time = time.ticks_ms()
 
 def main():
     
@@ -30,9 +34,7 @@ def main():
         angle = calculate_pitch(top, bottom)
         pitch(angle, servo)
         
-        
-        
-        print(f"turn_speed {turn_speed*100} pitch {angle}")
+#         print(f"turn_speed {turn_speed*100} pitch {angle}")
         
        
 def turn(turn_speed, left, right):
@@ -45,13 +47,29 @@ def turn(turn_speed, left, right):
         right.on()
     else:
         left.off()
-        right.off()
-         
+        right.off()         
     
 
 def pitch(angle, servo):
-    servo.move(angle)
+    global angle_update_time
+    global prev_angle
+    
+    now = time.ticks_ms()
+    
+    if (angle is not None and not math.isclose(angle, prev_angle) and now != angle_update_time):
+        # Cap movement at MAX_ANGULAR_SERVO_SPEED
+        max_angle_diff = MAX_ANGULAR_SERVO_SPEED * (now - angle_update_time) 
+        angle_diff = angle - prev_angle                
+        rel = angle_diff / max_angle_diff
+        rel = min(max(rel, -1), 1)  
+           
+        target = prev_angle + rel * max_angle_diff
+            
+        servo.move(target)
+        prev_angle = target
 
+
+    angle_update_time = now
 
 def calculate_turn(left_pad, right_pad):
     
@@ -70,6 +88,9 @@ def calculate_pitch(top_pad, bottom_pad):
     
     top_corrected = min((top_pad.read()-30000) / 300000, 1)
     bottom_corrected = min((bottom_pad.read() -30000) / 300000, 1)
+
+    if top_corrected < .1 and bottom_corrected < .1:
+        return None
 
     limit_below = -10
     limit_above = 90
