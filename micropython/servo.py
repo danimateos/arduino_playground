@@ -60,7 +60,7 @@ if False:
         pwms[0].duty(d)
         time.sleep(.01)
         
-servo = Servo(pin=15)
+servo = Servo(pin=14)
 
 def keep_moving(seconds):
     for _ in range(seconds // 2):

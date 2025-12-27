@@ -33,8 +33,8 @@ def main():
         
         angle = calculate_pitch(top, bottom)
         pitch(angle, servo)
-        
-#         print(f"turn_speed {turn_speed*100} pitch {angle}")
+
+        print(f"turn_speed {turn_speed*100} pitch {angle}")
         
        
 def turn(turn_speed, left, right):
