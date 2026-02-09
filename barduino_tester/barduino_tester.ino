@@ -22,12 +22,13 @@ int ledState = LOW;  // ledState used to set the LED
 
 // Generally, you should use "unsigned long" for variables that hold time
 // The value will quickly become too large for an int to store
+unsigned long currentMillis = 0;
 unsigned long previousBlinkMillis = 0;  // will store last time LED was updated
 unsigned long previousPrintMillis = 0;  // will store last time LED was updated
 
 // constants won't change:
 const long blinkInterval = 500;  // interval at which to blink (milliseconds)
-const long printInterval = 100; 
+const long printInterval = 100;
 
 void setup() {
   // set the digital pin as output:
@@ -50,12 +51,12 @@ void loop() {
   // check to see if it's time to blink the LED; that is, if the difference
   // between the current time and last time you blinked the LED is bigger than
   // the interval at which you want to blink the LED.
-  unsigned long currentMillis = millis();
+  currentMillis = millis();
 
   if (currentMillis - previousPrintMillis >= printInterval) {
     previousPrintMillis = currentMillis;
 
-    // printTouchState();
+    printState();
   }
 
   if (currentMillis - previousBlinkMillis >= blinkInterval) {
@@ -69,34 +70,35 @@ void loop() {
       strip.setPixelColor(0, 50, 200, 0);
       strip.show();
       tone(buzzerPin, 400);
-
-      Serial.print("Temp is ");
-      Serial.print(temperature.readTemperatureC());
-      Serial.println("C");
     } else {
       ledState = LOW;
       strip.setPixelColor(0, 200, 50, 0);
       strip.show();
       noTone(buzzerPin);
-
-      Serial.print("Light reading is ");
-      Serial.println(analogRead(lightSensorPin));
     }
 
     // set the LED with the ledState of the variable:
     digitalWrite(ledPin, ledState);
   }
-
-  printTouchState(); 
 }
 
-void printTouchState() {
-    Serial.print("T");
-    Serial.print(touchRead(topTouchPin));
-    Serial.print(" | R");
-    Serial.print(touchRead(rightTouchPin));
-    Serial.print(" | B");
-    Serial.print(touchRead(bottomTouchPin));
-    Serial.print(" | L");
-    Serial.println(touchRead(leftTouchPin));
+void printState() {
+
+  Serial.print(temperature.readTemperatureC());
+  Serial.print("C");
+  Serial.print(" | LT");
+  Serial.print(analogRead(lightSensorPin));
+  Serial.print(" | BT");
+  Serial.print(digitalRead(buttonPin));
+
+
+  Serial.print(" | R");
+  Serial.print("T");
+  Serial.print(touchRead(topTouchPin));
+  Serial.print(" | R");
+  Serial.print(touchRead(rightTouchPin));
+  Serial.print(" | B");
+  Serial.print(touchRead(bottomTouchPin));
+  Serial.print(" | L");
+  Serial.println(touchRead(leftTouchPin));
 }
