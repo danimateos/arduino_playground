@@ -69,11 +69,15 @@ void loop() {
       ledState = HIGH;
       strip.setPixelColor(0, 50, 200, 0);
       strip.show();
-      tone(buzzerPin, 400);
     } else {
       ledState = LOW;
       strip.setPixelColor(0, 200, 50, 0);
       strip.show();
+    }
+
+    if (!digitalRead(buttonPin)) {
+      tone(buzzerPin, 400);
+    } else {
       noTone(buzzerPin);
     }
 
