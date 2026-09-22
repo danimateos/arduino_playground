@@ -88,21 +88,20 @@ void loop() {
 
 void printState() {
 
+  Serial.print("Temp:");
   Serial.print(temperature.readTemperatureC());
-  Serial.print("C");
-  Serial.print(" | LT");
+  Serial.print(" LT:");
   Serial.print(analogRead(lightSensorPin));
-  Serial.print(" | BT");
+  Serial.print(" BT:");
   Serial.print(digitalRead(buttonPin));
 
 
-  Serial.print(" | R");
-  Serial.print("T");
+  Serial.print(" Top:");
   Serial.print(touchRead(topTouchPin));
-  Serial.print(" | R");
+  Serial.print(" Right:");
   Serial.print(touchRead(rightTouchPin));
-  Serial.print(" | B");
+  Serial.print(" Bottom:");
   Serial.print(touchRead(bottomTouchPin));
-  Serial.print(" | L");
+  Serial.print(" Left:");
   Serial.println(touchRead(leftTouchPin));
 }
